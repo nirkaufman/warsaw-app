@@ -1,12 +1,15 @@
 import { Injectable } from '@angular/core';
+import {AngularFireAuth} from "angularfire2/auth";
 
 @Injectable()
 export class AuthService {
 
-  constructor() { }
+  constructor(private afa:AngularFireAuth) {}
 
   register(userInfo){
-    console.log(userInfo);
+   return this.afa.auth
+        .createUserWithEmailAndPassword(userInfo.email, userInfo.password)
+        .then( newUser => console.log(newUser) )
   }
 
   signIn({ email, password }){
@@ -14,10 +17,10 @@ export class AuthService {
   }
 
   recoverPassword(email){
-    console.log(`recover: ${email}`);
+    this.afa.auth.sendPasswordResetEmail(email);
   }
 
   signOut(){
-    console.log('sign out');
+    this.afa.auth.signOut();
   }
 }

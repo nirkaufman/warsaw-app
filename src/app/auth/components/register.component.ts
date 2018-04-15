@@ -7,7 +7,7 @@ import {AuthService} from "../services/auth.service";
     <div class="row">
       <div class="col-6">
         <h2>Register</h2>
-        <form (ngSubmit)="auth.register(userInfo)">
+        <form (ngSubmit)="register()">
           <div class="form-group">
             <label>Full name</label>
             <input type="text"
@@ -33,7 +33,11 @@ import {AuthService} from "../services/auth.service";
                    [(ngModel)]="userInfo.password"
                    class="form-control">
           </div>
-
+          
+          <div>
+            <span class="text-danger">{{ errorMsg }}</span>
+          </div>
+          
           <button type="submit" class="btn btn-primary">Submit</button>
         </form>
       </div>
@@ -43,6 +47,17 @@ import {AuthService} from "../services/auth.service";
 })
 export class RegisterComponent  {
   userInfo = {fullName: '', email: '', password: ''};
-  constructor(public auth: AuthService) { }
+  errorMsg = '';
+  public auth: AuthService;
+
+
+  constructor(auth: AuthService) {
+    this.auth = auth;
+  }
+
+  register(){
+    this.auth.register(this.userInfo)
+        .catch( ({ message }) => this.errorMsg = message)
+  }
 
 }

@@ -7,10 +7,12 @@ import {RecoverComponent} from './components/recover.component';
 import {RouterModule} from "@angular/router";
 import { AuthService } from './services/auth.service';
 import {FormsModule} from "@angular/forms";
+import {AngularFireAuthModule} from "angularfire2/auth";
 
 @NgModule({
   imports: [
       CommonModule,
+      AngularFireAuthModule,
       FormsModule,
       RouterModule.forChild([
         {path: '', component: SignInComponent},

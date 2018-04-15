@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {AuthService} from "../services/auth.service";
 
 @Component({
   selector: 'app-recover',
@@ -6,10 +7,12 @@ import { Component, OnInit } from '@angular/core';
     <div class="row">
       <div class="col-6">
         <h2>Recover</h2>
-        <form>
+        <form (ngSubmit)="auth.recoverPassword(email)">
           <div class="form-group">
             <label>Email</label>
             <input type="text"
+                   name="email"
+                   [(ngModel)]="email"
                    class="form-control">
           </div>
           <button type="submit" class="btn btn-primary">Recover</button>
@@ -19,11 +22,12 @@ import { Component, OnInit } from '@angular/core';
   `,
   styles: []
 })
-export class RecoverComponent implements OnInit {
+export class RecoverComponent  {
+  auth: AuthService;
+  email = '';
 
-  constructor() { }
-
-  ngOnInit() {
+  constructor(auth: AuthService) {
+    this.auth = auth;
   }
 
 }
